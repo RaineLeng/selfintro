@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人网站 | theOpenExpanse</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* 全局样式 */
+        :root {
+            --primary-bg: #f8f5f2;
+            --primary-text: #333;
+            --secondary-text: #666;
+            --accent-color: #8b9a8b;
+            --accent-color-light: #a6b3a6;
+            --border-color: #e8e4e0;
+            --shadow-light: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Serif SC', Georgia, Times New Roman, serif;
+            background-color: var(--primary-bg);
+            color: var(--primary-text);
+            line-height: 1.8;
+            font-size: 1rem;
+            width: 100%;
+            min-width: 320px;
+            overflow-x: hidden;
+        }
+
+        code, pre {
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+        }
+
+        /* 导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(248, 245, 242, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-text);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-family: Georgia, Times New Roman, serif;
+        }
+
+        .logo:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-text);
+            font-weight: 400;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-text);
+        }
+
+
+
+        /* 容器 */
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* 内容区域 */
+        main {
+            padding: 2rem 0;
+            width: 100%;
+        }
+
+        section {
+            width: 100%;
+        }
+
+        /* 通用部分样式 */
+        section {
+            margin-bottom: 4rem;
+            padding: 2rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary-text);
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+
+        /* 关于部分 */
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .about-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* 文章列表样式 */
+        .articles-section, .articles-page {
+            background-color: var(--primary-bg);
+        }
+
+        .latest-articles, .article-list {
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .article-item {
+            background-color: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .article-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .article-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .article-title a {
+            color: var(--primary-text);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .article-title a:hover {
+            color: var(--accent-color);
+        }
+
+        .article-meta {
+            color: var(--secondary-text);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .article-excerpt {
+            color: var(--secondary-text);
+            margin-bottom: 1.5rem;
+        }
+
+        .read-more {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background-color: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .read-more:hover {
+            background-color: var(--accent-color-light);
+        }
+
+        .view-all-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .view-all-btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: transparent;
+            color: var(--accent-color);
+            text-decoration: none;
+            border: 2px solid var(--accent-color);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .view-all-btn:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        /* 文章标签页样式 */
+        .article-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background-color: transparent;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .tab-btn.active {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* 文章详情页样式 */
+        .post-container {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            background-color: white;
+            padding: 3rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow-light);
+        }
+
+        .post-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-text);
+            line-height: 1.3;
+        }
+
+        .post-meta {
+            color: var(--secondary-text);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .post-content {
+            font-size: 1.1rem;
+            color: var(--primary-text);
+        }
+
+        .post-content h2 {
+            font-size: 2rem;
+            margin: 2rem 0 1rem;
+            color: var(--primary-text);
+        }
+
+        .post-content h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--primary-text);
+        }
+
+        .post-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .post-content ul, .post-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+
+        .post-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .post-content strong {
+            font-weight: 600;
+            color: var(--primary-text);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-link:hover {
+            background-color: var(--accent-color-light);
+        }
+
+        /* 项目部分样式 */
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .project-item {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        .project-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-text);
+        }
+
+        /* 页脚样式 */
+        footer {
+            background-color: var(--primary-text);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Instagram和LinkedIn图标使用白色 */
+        .social-links a[href*="instagram"],
+        .social-links a[href*="linkedin"] {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* 模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 90%;
+            max-height: 90%;
+            overflow: auto;
+            text-align: center;
+            animation: slideIn 0.3s ease;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--secondary-text);
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--primary-text);
+        }
+
+        .modal-content h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-text);
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* 小红书图标样式 */
+        .xhx-logo {
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+        }
+
+        /* 动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1199px) {
+            html {
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            html {
+                font-size: 14px;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background-color: var(--primary-bg);
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                padding: 2rem;
+                box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+                transform: translateY(-150%);
+                transition: transform 0.3s ease;
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .article-title {
+                font-size: 1.5rem;
+            }
+
+            .post-title {
+                font-size: 2rem;
+            }
+
+            .post-container {
+                padding: 2rem;
+            }
+
+            .article-tabs {
+                flex-wrap: wrap;
+            }
+
+            .tab-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .social-links {
+                gap: 1.5rem;
+            }
+
+            .social-links a {
+                font-size: 1.3rem;
+                width: 35px;
+                height: 35px;
+                line-height: 35px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            html {
+                font-size: 13px;
+            }
+
+            .nav-container {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            main {
+                margin-top: 70px;
+                padding: 1.5rem 0;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .about-content {
+                font-size: 1rem;
+            }
+
+            .article-item, .project-item {
+                padding: 1.5rem;
+            }
+
+            .article-title {
+                font-size: 1.3rem;
+            }
+
+            .post-title {
+                font-size: 1.8rem;
+            }
+
+            .post-container {
+                padding: 1.5rem;
+            }
+
+            .post-content {
+                font-size: 1rem;
+            }
+
+            .social-links {
+                gap: 1rem;
+            }
+
+            .social-links a {
+                font-size: 1.2rem;
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
+            }
+
+            footer {
+                padding: 2rem 0;
+            }
+        }
+    </style>
+</head>
+    <body>
+        <!-- 导航栏 -->
+        <nav>
+            <div class="nav-container">
+                <a href="index.html" class="logo">theOpenExpanse</a>
+                <ul class="nav-links">
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="index.html#about">关于</a></li>
+                    <li><a href="articles.html">文章</a></li>
+                    <li><a href="index.html#projects">项目</a></li>
+                    <li><a href="index.html#contact">联系</a></li>
+                </ul>
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 主要内容区域 -->
+        <main>
+        
+            <section class="post-section">
+                <div class="container">
+                    <div class="post-container">
+                        <h1 class="post-title">秋日午后的咖啡馆</h1>
+                        <p class="post-meta">2023年10月15日 | 生活</p>
+                        <div class="post-content">
+                            <p>秋日的午后，阳光透过咖啡馆的玻璃窗洒在桌面上，形成斑驳的光影。我坐在角落里，手中捧着一杯温热的咖啡，看着窗外人来人往，感受着季节的变迁。</p>
+<p>这家咖啡馆是我常来的地方，木质的桌椅、温暖的灯光、轻柔的音乐，一切都让人感到舒适和放松。尤其是在这样的秋日午后，阳光不那么刺眼，温度也刚刚好，让人只想在这里度过一个悠闲的下午。</p>
+<h2>咖啡的香气</h2>
+<p>我点了一杯拿铁，奶泡细腻，咖啡醇香。轻抿一口，温暖从喉咙蔓延到全身。咖啡师的手艺不错，每一次来都能喝到满意的咖啡。咖啡馆里弥漫着咖啡豆烘焙后的香气，混合着点心的甜味，让人心情愉悦。</p>
+<p>窗外的梧桐树叶已经开始泛黄，偶尔有几片叶子随风飘落，像是在跳着优雅的舞蹈。街道上的行人穿着轻便的外套，有的在匆匆赶路，有的在悠闲地散步，每个人都有自己的节奏和故事。</p>
+<h2>阅读时光</h2>
+<p>我从包里拿出一本一直想读的书，这是一本关于旅行的散文，作者用细腻的笔触描绘了世界各地的风景和人文。在这样的环境中阅读，时间仿佛静止了，只有文字在眼前流动，思绪在书中漫游。</p>
+<p>偶尔抬起头，看看周围的人，有的在专注地工作，有的在愉快地交谈，有的和我一样在阅读。每个人都在自己的世界里，却又共同构成了这个咖啡馆的独特氛围。这种感觉很奇妙，既孤独又温暖。</p>
+<h2>秋日的思绪</h2>
+<p>秋天是一个容易让人思考的季节。看着窗外的景色，我不禁想起了许多往事。那些美好的回忆，那些错过的机会，那些曾经的人和事，都像电影一样在脑海中闪现。秋天的萧瑟与丰收并存，就像人生一样，有失去也有收获。</p>
+<p>咖啡慢慢凉了，书也读了大半。我合上书本，深深吸了一口气，感受着咖啡馆里的温暖和宁静。有时候，我们需要这样的时刻，远离喧嚣，远离忙碌，给自己一点时间和空间，去思考，去感受，去生活。</p>
+<p>秋日的午后，咖啡馆里的时光，是属于自己的珍贵时光。在这里，我找到了内心的平静，也找到了生活的美好。也许这就是咖啡馆的魅力所在，它不仅仅是一个喝咖啡的地方，更是一个让人心灵栖息的港湾。</p>
+<p>当我离开咖啡馆的时候，夕阳已经西下，天空被染成了金黄色。我回头望了一眼，咖啡馆的灯光已经亮起，温暖的光芒透过窗户洒在街道上。我知道，我还会再来，再来享受这秋日午后的咖啡馆时光。</p>
+
+                        </div>
+                        <a href="../articles.html" class="back-link">返回文章列表</a>
+                    </div>
+                </div>
+            </section>
+        
+    </main>
+
+    <!-- 模态框 -->
+    <div id="wechat-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3>微信二维码</h3>
+            <img src="/images/wechat-qr.svg" alt="微信二维码">
+        </div>
+    </div>
+
+    <div id="xiaohongshu-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3>小红书二维码</h3>
+            <img src="/images/xiaohongshu-qr.svg" alt="小红书二维码">
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="social-links">
+                    <a id="wechat-link"><i class="fab fa-weixin"></i></a>
+                    <a id="xiaohongshu-link"><svg class="xhx-logo" width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <!-- 深灰色圆角背景 -->
+                        <rect x="10" y="10" width="160" height="160" rx="20" fill="#666"/>
+                        <!-- 白色小红书文字 -->
+                        <text x="90" y="105" text-anchor="middle" fill="white"
+                              font-family="PingFang SC, Microsoft YaHei, sans-serif"
+                              font-size="36" font-weight="bold">小红书</text>
+                    </svg></a>
+                    <a href="https://instagram.com/your_username" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linkedin.com/in/your_profile" target="_blank"><i class="fab fa-linkedin"></i></a>
+                </div>
+                <p class="copyright">© 2025 冷. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 导航栏汉堡菜单
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // 滚动到指定区域
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ 
+                            behavior: 'smooth' 
+                        });
+                    }
+                }
+                
+                // 关闭移动菜单
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // 模态框功能
+        const modals = {
+            'wechat-link': 'wechat-modal',
+            'xiaohongshu-link': 'xiaohongshu-modal'
+        };
+
+        // 打开模态框
+        Object.keys(modals).forEach(linkId => {
+            const link = document.getElementById(linkId);
+            const modalId = modals[linkId];
+            const modal = document.getElementById(modalId);
+            
+            link.addEventListener('click', () => {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // 防止背景滚动
+            });
+        });
+
+        // 关闭模态框
+        document.querySelectorAll('.modal-close').forEach(closeBtn => {
+            closeBtn.addEventListener('click', () => {
+                const modal = closeBtn.closest('.modal');
+                modal.classList.remove('active');
+                document.body.style.overflow = ''; // 恢复背景滚动
+            });
+        });
+
+        // 点击模态框外部关闭
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = ''; // 恢复背景滚动
+                }
+            });
+        });
+
+        // 文章标签页切换功能
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const type = btn.getAttribute('data-type');
+                
+                // 更新按钮状态
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // 更新内容显示
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                    if (content.getAttribute('data-type') === type) {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>未来城市：探索可持续发展的建筑设计</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* 全局样式 */
+        :root {
+            --primary-bg: #f8f5f2;
+            --primary-text: #333;
+            --secondary-text: #666;
+            --accent-color: #8b9a8b;
+            --accent-color-light: #a6b3a6;
+            --border-color: #e8e4e0;
+            --shadow-light: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Serif SC', Georgia, Times New Roman, serif;
+            background-color: var(--primary-bg);
+            color: var(--primary-text);
+            line-height: 1.8;
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+
+        code, pre {
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+        }
+
+        /* 导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(248, 245, 242, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-text);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-family: Georgia, Times New Roman, serif;
+        }
+
+        .logo:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-text);
+            font-weight: 400;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--primary-text);
+        }
+
+        /* 容器样式 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* 文章详情页样式 */
+        .post-container {
+            padding: 120px 0 80px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .post-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--primary-text);
+            line-height: 1.3;
+        }
+
+        .post-meta {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .post-content {
+            color: var(--primary-text);
+            font-size: 1.1rem;
+            line-height: 1.9;
+        }
+
+        .post-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .post-content h2 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin: 2.5rem 0 1.5rem;
+            color: var(--primary-text);
+        }
+
+        .post-content h3 {
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin: 2rem 0 1.2rem;
+            color: var(--primary-text);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 3rem;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .back-link::before {
+            content: '←';
+            position: absolute;
+            left: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--accent-color-light);
+        }
+
+        .back-link:hover::before {
+            transform: translateX(-3px);
+        }
+
+        /* 页脚 */
+        footer {
+            background-color: var(--primary-bg);
+            padding: 4rem 0 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            font-size: 1.5rem;
+            color: var(--secondary-text);
+            transition: color 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        /* 为SVG小红书图标添加样式，使其与其他图标大小一致 */
+        .xhx-logo {
+            width: 1.2em;
+            height: 1.2em;
+            vertical-align: -0.2em; /* 微调垂直对齐，使其与其他图标视觉上居中 */
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            color: var(--secondary-text);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        /* 模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            max-width: 90%;
+            max-height: 90%;
+            overflow: auto;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: var(--secondary-text);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--primary-text);
+        }
+
+        .modal h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-text);
+            font-size: 1.5rem;
+        }
+
+        .modal img {
+            max-width: 200px;
+            max-height: 200px;
+            display: block;
+            margin: 0 auto;
+            border: 1px solid var(--border-color);
+        }
+
+        /* 动画 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background-color: var(--primary-bg);
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                padding: 2rem;
+                box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+                transform: translateY(-150%);
+                transition: transform 0.3s ease;
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .post-title {
+                font-size: 2rem;
+            }
+
+            .post-content {
+                font-size: 1rem;
+            }
+
+            .post-container {
+                padding: 100px 0 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .post-title {
+                font-size: 1.8rem;
+            }
+
+            .social-links {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">theOpenExpanse</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="../index.html#about">关于</a></li>
+                <li><a href="../index.html#articles">文章</a></li>
+                <li><a href="../index.html#projects">项目</a></li>
+                <li><a href="../index.html#contact">联系</a></li>
+            </ul>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 文章内容区域 -->
+    <main class="post-container">
+        <h1 class="post-title">未来城市：探索可持续发展的建筑设计</h1>
+        <div class="post-meta">发布于：2023年11月20日</div>
+        <div class="post-content">
+            <p>随着全球城市化进程的加速和环境问题的日益严重，可持续发展的建筑设计已成为未来城市规划的重要方向。如何在满足人类居住和工作需求的同时，减少对环境的影响，创造更加宜居、可持续的城市空间，是当代建筑师和城市规划师面临的重要课题。</p>
+            
+            <h2>可持续建筑设计的理念与原则</h2>
+            <p>可持续建筑设计不仅仅是一种技术手段，更是一种全新的设计理念。它强调建筑与自然环境的和谐共生，追求资源的高效利用和环境的最小影响。</p>
+            
+            <h3>1. 尊重自然环境</h3>
+            <p>可持续建筑设计首先要尊重建筑所在地的自然环境，包括地形、气候、植被、水资源等。在设计过程中，应充分考虑这些自然因素，使建筑与周围环境有机融合，而不是破坏或割裂自然环境。</p>
+            
+            <p>例如，在炎热地区，可以利用当地的主导风向和阴影效应，设计自然通风和遮阳系统，减少空调的使用；在寒冷地区，可以合理利用太阳能，设计被动式供暖系统，降低能源消耗。</p>
+            
+            <h3>2. 资源高效利用</h3>
+            <p>可持续建筑设计强调资源的高效利用，包括土地、水、能源、材料等。通过采用先进的技术和设计方法，最大限度地减少资源的消耗和浪费。</p>
+            
+            <p>土地利用方面，可以通过提高建筑密度、混合功能开发等方式，减少城市扩张对自然环境的破坏；水资源利用方面，可以设计雨水收集和回收利用系统，减少自来水的使用；能源利用方面，可以采用可再生能源（如太阳能、风能、地热能等）和节能技术（如高效保温材料、LED照明、智能控制系统等），降低建筑的能源消耗；材料利用方面，可以选择环保、可回收的建筑材料，减少对自然资源的开采和对环境的污染。</p>
+            
+            <h3>3. 减少环境影响</h3>
+            <p>可持续建筑设计注重减少建筑全生命周期（从材料开采、建筑施工到使用维护、拆除回收）对环境的负面影响，包括温室气体排放、空气污染、水污染、固体废弃物等。</p>
+            
+            <p>例如，在建筑施工过程中，可以采用预制构件、模块化施工等方式，减少现场施工的噪音、粉尘和废弃物；在建筑使用过程中，可以通过绿色运营管理，减少能源消耗和废弃物产生；在建筑拆除阶段，可以采用可持续的拆除方法，对建筑材料进行分类回收和再利用。</p>
+            
+            <h3>4. 提升居住品质</h3>
+            <p>可持续建筑设计不仅要注重环境保护，还要关注人类的居住品质和健康福祉。通过优化建筑的空间布局、采光通风、室内空气质量等，创造舒适、健康、安全的居住和工作环境。</p>
+            
+            <p>例如，可以设计宽敞明亮的室内空间，增加自然采光和通风，提高室内空气质量；可以引入绿色植物，改善室内微气候和空气质量；可以设置公共空间和休闲设施，促进人与人之间的交流和互动，提升社区的凝聚力和归属感。</p>
+            
+            <h2>未来城市建筑设计的创新趋势</h2>
+            <p>随着科技的进步和社会的发展，未来城市的建筑设计将呈现出一些新的创新趋势，这些趋势将进一步推动可持续建筑设计的发展。</p>
+            
+            <h3>1. 垂直农业与立体绿化</h3>
+            <p>垂直农业是一种在垂直空间上进行农业生产的技术，它可以在城市建筑中实现食物的本地化生产，减少食物运输的能源消耗和碳排放，同时还可以改善城市的生态环境和空气质量。</p>
+            
+            <p>立体绿化是指在建筑的墙面、屋顶、阳台等空间进行绿化，它可以增加城市的绿化面积，改善城市的热岛效应，减少建筑的能耗，同时还可以美化城市环境，提升居住品质。</p>
+            
+            <p>未来的城市建筑将越来越多地集成垂直农业和立体绿化技术，形成"空中花园"、"垂直农场"等新型建筑形式。例如，新加坡的"翠城新景"（The Interlace）项目，通过巧妙的建筑布局，在高层住宅中创造了大量的屋顶花园和公共空间，为居民提供了舒适的户外活动场所，同时也改善了小区的生态环境。</p>
+            
+            <h3>2. 智能建筑与数字孪生</h3>
+            <p>智能建筑是指通过集成先进的信息技术、自动化控制技术和建筑技术，实现建筑的智能化管理和运营。智能建筑可以根据用户的需求和环境的变化，自动调整建筑的温度、湿度、照明、通风等参数，提高建筑的能源利用效率和舒适性。</p>
+            
+            <p>数字孪生是指通过创建建筑的数字模型，实时监控和模拟建筑的运行状态，预测可能出现的问题，并提供优化方案。数字孪生技术可以帮助建筑师和工程师在设计阶段就更好地了解建筑的性能，优化设计方案；在建筑使用阶段，可以实现建筑的精细化管理和维护，延长建筑的使用寿命，降低运营成本。</p>
+            
+            <p>未来的智能建筑将更加智能化、人性化和可持续化。例如，通过物联网技术，建筑可以与用户的智能设备互联互通，提供个性化的服务；通过人工智能技术，建筑可以学习用户的行为习惯，预测用户的需求，提供更加智能的服务；通过大数据分析，建筑可以优化能源管理、空间利用和维护计划，提高建筑的整体性能。</p>
+            
+            <h3>3. 模块化与预制建筑</h3>
+            <p>模块化建筑是指将建筑划分为若干个标准化的模块，在工厂中进行预制生产，然后在现场进行组装。预制建筑是指将建筑的构件（如墙体、楼板、梁柱等）在工厂中预制生产，然后在现场进行安装。</p>
+            
+            <p>模块化和预制建筑具有施工速度快、质量可控、减少现场污染、节约劳动力等优点，符合可持续建筑发展的要求。同时，模块化和预制建筑还可以提高建筑的可变性和适应性，使建筑能够更好地适应未来的功能变化和需求调整。</p>
+            
+            <p>未来的城市建筑将越来越多地采用模块化和预制建筑技术，特别是在住宅、酒店、办公楼等标准化程度较高的建筑类型中。例如，日本的"东京游牧族酒店"（Hotel Koe）就是一个模块化建筑的典型案例，它由多个标准化的客房模块组成，可以根据需求快速组装和拆卸，适应不同的场地和市场需求。</p>
+            
+            <h3>4. 零碳建筑与净零能耗社区</h3>
+            <p>零碳建筑是指建筑在运营过程中产生的碳排放量等于或小于其通过碳汇（如绿化、可再生能源等）吸收的碳排放量。净零能耗社区是指社区在运营过程中消耗的能源等于或小于其通过可再生能源生产的能源。</p>
+            
+            <p>零碳建筑和净零能耗社区是未来城市可持续发展的重要目标，它们可以大幅减少城市的碳排放，缓解气候变化的影响。实现零碳建筑和净零能耗社区需要综合运用节能技术、可再生能源、智能管理等多种技术手段，同时也需要政策支持和社会参与。</p>
+            
+            <p>例如，丹麦的"零碳社区"（Sønderborg）项目，通过推广可再生能源、提高能源效率、建立智能能源管理系统等措施，实现了社区的碳减排目标，成为全球可持续社区的典范。</p>
+            
+            <h2>可持续建筑设计的实践案例</h2>
+            <p>为了更好地理解可持续建筑设计的理念和实践，下面我将介绍几个具有代表性的可持续建筑项目。</p>
+            
+            <h3>1. 北京奥运会主体育场"鸟巢"</h3>
+            <p>北京奥运会主体育场"鸟巢"是2008年北京奥运会的主会场，也是中国当代建筑的代表作之一。它的设计充分体现了可持续发展的理念，主要表现在以下几个方面：</p>
+            
+            <p><strong>（1）结构创新</strong>："鸟巢"采用了独特的钢结构编织式屋顶，这种结构形式不仅具有强烈的视觉冲击力，还可以减少钢材的使用量，降低建筑的自重和能耗。</p>
+            
+            <p><strong>（2）自然采光与通风</strong>："鸟巢"的屋顶设有多个开口，可以引入自然采光和通风，减少人工照明和机械通风的使用，降低能源消耗。</p>
+            
+            <p><strong>（3）雨水收集利用</strong>："鸟巢"设计了完善的雨水收集和利用系统，可以收集和处理雨水，用于场地绿化、卫生间冲洗等，减少自来水的使用。</p>
+            
+            <p><strong>（4）可再生能源利用</strong>："鸟巢"安装了太阳能光伏发电系统，可以为场馆提供部分电力，减少对传统能源的依赖。</p>
+            
+            <h3>2. 新加坡"滨海湾花园"</h3>
+            <p>新加坡"滨海湾花园"是一个集植物展示、教育、休闲、娱乐于一体的大型城市公园，它的设计充分体现了可持续发展的理念，主要表现在以下几个方面：</p>
+            
+            <p><strong>（1）垂直绿化</strong>："滨海湾花园"的"超级树"（Supertrees）是一组高达25-50米的树形结构，它们的表面覆盖着大量的植物，形成了独特的垂直绿化景观。这些"超级树"不仅可以美化环境，还可以收集雨水、生成太阳能电力、提供夜间照明，同时还可以作为温室的通风管道，体现了多功能集成的设计理念。</p>
+            
+            <p><strong>（2）可持续能源利用</strong>："滨海湾花园"的"超级树"和温室都安装了太阳能光伏发电系统，可以为公园提供部分电力。此外，公园还采用了地源热泵系统，利用地下水的温度调节温室的温度，减少空调的使用。</p>
+            
+            <p><strong>（3）水资源管理</strong>："滨海湾花园"设计了完善的水资源管理系统，包括雨水收集、中水处理、循环利用等，可以实现水资源的高效利用和零排放。</p>
+            
+            <p><strong>（4）生物多样性保护</strong>："滨海湾花园"种植了来自世界各地的大量植物，包括许多珍稀和濒危物种，为生物多样性保护做出了贡献。同时，公园还为当地的鸟类、昆虫等野生动物提供了栖息地，促进了生态系统的恢复和发展。</p>
+            
+            <h3>3. 迪拜"垂直农场"</h3>
+            <p>迪拜"垂直农场"是世界上最大的垂直农场之一，它的设计充分体现了可持续农业的理念，主要表现在以下几个方面：</p>
+            
+            <p><strong>（1）垂直种植系统</strong>："垂直农场"采用了先进的垂直种植系统，可以在有限的空间内生产大量的蔬菜和水果。这种种植方式不仅可以提高土地利用效率，还可以减少水资源的消耗和农药的使用。</p>
+            
+            <p><strong>（2）智能控制系统</strong>："垂直农场"配备了先进的智能控制系统，可以自动调节温度、湿度、光照、营养等生长条件，为植物提供最适宜的生长环境，提高产量和质量。</p>
+            
+            <p><strong>（3）水资源循环利用</strong>："垂直农场"采用了闭环水循环系统，可以收集和处理种植过程中产生的废水，用于灌溉和施肥，实现水资源的循环利用，减少水资源的浪费。</p>
+            
+            <p><strong>（4）可再生能源利用</strong>："垂直农场"安装了太阳能光伏发电系统，可以为农场提供部分电力，减少对传统能源的依赖。</p>
+            
+            <h2>未来挑战与展望</h2>
+            <p>可持续建筑设计虽然已经取得了显著的成就，但在未来的发展过程中，仍然面临着许多挑战和机遇。</p>
+            
+            <h3>1. 技术创新与突破</h3>
+            <p>随着科技的不断进步，可持续建筑设计将迎来更多的技术创新和突破。例如，新型建筑材料的研发（如高性能保温材料、智能响应材料、生物基材料等）、可再生能源技术的改进（如更高效的太阳能电池、更稳定的风能发电系统等）、智能建筑技术的发展（如人工智能、物联网、大数据等），都将为可持续建筑设计提供新的可能性。</p>
+            
+            <h3>2. 政策支持与引导</h3>
+            <p>可持续建筑设计的发展需要政策的支持与引导。政府可以通过制定相关的法律法规、标准规范、激励政策等，促进可持续建筑的发展。例如，建立绿色建筑评价体系、提供财政补贴和税收优惠、强制要求新建建筑达到一定的节能标准等。</p>
+            
+            <h3>3. 市场需求与意识提升</h3>
+            <p>可持续建筑设计的发展还需要市场需求的拉动和公众意识的提升。随着人们环保意识的增强和对生活品质要求的提高，可持续建筑的市场需求将不断增加。同时，通过教育和宣传，可以提高公众对可持续建筑的认识和理解，促进可持续建筑的普及和发展。</p>
+            
+            <h3>4. 国际合作与交流</h3>
+            <p>可持续建筑设计是一个全球性的课题，需要国际间的合作与交流。通过分享经验、技术和资源，可以共同应对全球性的环境挑战，推动可持续建筑设计的发展。例如，国际组织（如联合国、世界银行等）可以提供资金和技术支持，促进发展中国家可持续建筑的发展；国际会议和展览可以为建筑师、工程师、学者等提供交流和合作的平台。</p>
+            
+            <h2>结语</h2>
+            <p>可持续发展的建筑设计是未来城市发展的必然趋势，它不仅可以减少对环境的影响，还可以创造更加宜居、可持续的城市空间。作为建筑师和城市规划师，我们应该积极探索和实践可持续建筑设计的理念和方法，为未来城市的可持续发展贡献自己的力量。</p>
+            
+            <p>未来的城市将是人与自然和谐共生的城市，是资源高效利用的城市，是环境友好的城市，是宜居宜业的城市。让我们共同努力，用可持续建筑设计的理念和实践，构建更加美好的未来城市！</p>
+        </div>
+        <a href="../index.html#articles" class="back-link">返回文章列表</a>
+    </main>
+
+    <!-- 模态框 -->
+    <div id="wechat-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3>微信二维码</h3>
+            <img src="../images/wechat-qr.jpg" alt="微信二维码" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y4ZjVmMiIvPjxwYXRoIGQ9Ik0xMDAgMTBjLTQ5LjcgMC05MCA0MC4zLTkwIDkwczQwLjMgOTA5MCA5MCA5MC00MC4zIDkwLTkwIDkwem0wLTEwYzQ0LjIgMCA4MCAzNS44IDgwIDgwcy0zNS44IDgwLTgwIDgwLTgwLTM1LjgtODAtODAgMzUuOC04MCA4MC04MHoiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxIi8+PHBhdGggZD0iTTEyMCAxMzBjMCAxMS4xLTkuOSAyMC0yMCAyMHMtMjAtOS45LTIwLTIwIDkuOS0yMCAyMC0yMCAyMCA5LjkgMjAgMjB6IiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMSIvPjwvc3ZnPg=='">
+        </div>
+    </div>
+
+    <div id="xiaohongshu-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3>小红书二维码</h3>
+            <img src="../images/xiaohongshu-qr.jpg" alt="小红书二维码" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y4ZjVmMiIvPjxwYXRoIGQ9Ik0xMDAgMTBjLTQ5LjcgMC05MCA0MC4zLTkwIDkwczQwLjMgOTA5MCA5MCA5MC00MC4zIDkwLTkwIDkwem0wLTEwYzQ0LjIgMCA4MCAzNS44IDgwIDgwcy0zNS44IDgwLTgwIDgwLTgwLTM1LjgtODAtODAgMzUuOC04MCA4MC04MHoiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxIi8+PHBhdGggZD0iTTEyMCAxMzBjMCAxMS4xLTkuOSAyMC0yMCAyMHMtMjAtOS45LTIwLTIwIDkuOS0yMCAyMC0yMCAyMCA5LjkgMjAgMjB6IiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMSIvPjwvc3ZnPg=='">
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="social-links">
+                    <a id="wechat-link"><i class="fab fa-weixin"></i></a>
+                    <a id="xiaohongshu-link"><svg class="xhx-logo" width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <!-- 深灰色圆角背景 -->
+                        <rect x="10" y="10" width="160" height="160" rx="20" fill="#666"/>
+                        <!-- 白色小红书文字 -->
+                        <text x="90" y="105" text-anchor="middle" fill="white"
+                              font-family="PingFang SC, Microsoft YaHei, sans-serif"
+                              font-size="36" font-weight="bold">小红书</text>
+                    </svg></a>
+                    <a href="https://instagram.com/your_username" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linkedin.com/in/your_profile" target="_blank"><i class="fab fa-linkedin"></i></a>
+                </div>
+                <p class="copyright">© 2025 冷. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 导航栏汉堡菜单
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // 滚动到指定区域
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ 
+                            behavior: 'smooth' 
+                        });
+                    }
+                }
+                
+                // 关闭移动菜单
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // 模态框功能
+        const modals = {
+            'wechat-link': 'wechat-modal',
+            'xiaohongshu-link': 'xiaohongshu-modal'
+        };
+
+        // 打开模态框
+        Object.keys(modals).forEach(linkId => {
+            const link = document.getElementById(linkId);
+            const modalId = modals[linkId];
+            const modal = document.getElementById(modalId);
+            
+            link.addEventListener('click', () => {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // 防止背景滚动
+            });
+        });
+
+        // 关闭模态框
+        function closeModal(modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = ''; // 恢复背景滚动
+        }
+
+        // 点击关闭按钮关闭模态框
+        document.querySelectorAll('.modal-close').forEach(closeBtn => {
+            closeBtn.addEventListener('click', () => {
+                const modal = closeBtn.closest('.modal');
+                closeModal(modal);
+            });
+        });
+
+        // 点击模态框外部关闭模态框
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal(modal);
+                }
+            });
+        });
+
+        // 按ESC键关闭模态框
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal.active').forEach(modal => {
+                    closeModal(modal);
+                });
+            }
+        });
+
+        // 滚动时导航栏样式变化
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.boxShadow = 'var(--shadow-light)';
+            } else {
+                nav.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

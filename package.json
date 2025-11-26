@@ -1,0 +1,23 @@
+{
+  "name": "selfintro-blog",
+  "version": "1.0.0",
+  "description": "个人博客网站，基于Markdown和数据驱动的现代化架构",
+  "main": "generate.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node generate.js",
+    "dev": "node generate.js && python3 -m http.server 8000"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.1",
+    "marked": "^11.1.0",
+    "yaml": "^2.3.4"
+  },
+  "keywords": [
+    "blog",
+    "markdown",
+    "javascript"
+  ],
+  "author": "",
+  "license": "MIT"
+}

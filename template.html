@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>title_replace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* 全局样式 */
+        :root {
+            --primary-bg: #f8f5f2;
+            --primary-text: #333;
+            --secondary-text: #666;
+            --accent-color: #8b9a8b;
+            --accent-color-light: #a6b3a6;
+            --border-color: #e8e4e0;
+            --shadow-light: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Serif SC', Georgia, Times New Roman, serif;
+            background-color: var(--primary-bg);
+            color: var(--primary-text);
+            line-height: 1.8;
+            font-size: 1rem;
+            overflow-x: hidden;
+            width: 100%;
+            min-width: 320px;
+        }
+
+        code, pre {
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+        }
+
+        /* 导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(248, 245, 242, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-text);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-family: Georgia, Times New Roman, serif;
+        }
+
+        .logo:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-text);
+            font-weight: 400;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--primary-text);
+        }
+
+        /* 容器样式 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+        }
+
+        /* 文章详情页样式 */
+        .post-container {
+            padding: 120px 0 80px;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        main {
+            width: 100%;
+        }
+        
+        section {
+            width: 100%;
+        }
+
+        .post-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--primary-text);
+            line-height: 1.3;
+        }
+
+        .post-meta {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .post-content {
+            color: var(--primary-text);
+            font-size: 1.1rem;
+            line-height: 1.9;
+        }
+
+        .post-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .post-content h2 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin: 2.5rem 0 1.5rem;
+            color: var(--primary-text);
+        }
+
+        .post-content h3 {
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin: 2rem 0 1.2rem;
+            color: var(--primary-text);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 3rem;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .back-link::before {
+            content: '←';
+            position: absolute;
+            left: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--accent-color-light);
+        }
+
+        .back-link:hover::before {
+            transform: translateX(-3px);
+        }
+
+        /* 页脚 */
+        footer {
+            background-color: var(--primary-bg);
+            padding: 4rem 0 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            font-size: 1.5rem;
+            color: var(--secondary-text);
+            transition: color 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        /* 为SVG小红书图标添加样式，使其与其他图标大小一致 */
+        .xhx-logo {
+            width: 1.2em;
+            height: 1.2em;
+            vertical-align: -0.2em; /* 微调垂直对齐，使其与其他图标视觉上居中 */
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            color: var(--secondary-text);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        /* 模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            max-width: 90%;
+            max-height: 90%;
+            overflow: auto;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: var(--secondary-text);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--primary-text);
+        }
+
+        .modal h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-text);
+            font-size: 1.5rem;
+        }
+
+        .modal img {
+            max-width: 200px;
+            max-height: 200px;
+            display: block;
+            margin: 0 auto;
+            border: 1px solid var(--border-color);
+        }
+
+        /* 动画 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1199px) {
+            /* 平板端适配 */
+            .container {
+                max-width: 100%;
+                padding: 0 1.5rem;
+            }
+            
+            .post-container {
+                max-width: 100%;
+                padding: 100px 1.5rem 60px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* 移动端适配 */
+            /* 基础字号调整 */
+            html {
+                font-size: 15px;
+            }
+            
+            /* 导航栏响应式 */
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background-color: var(--primary-bg);
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                padding: 2rem;
+                box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+                transform: translateY(-150%);
+                transition: transform 0.3s ease;
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            /* 容器响应式 */
+            .container {
+                padding: 0 1rem;
+            }
+            
+            /* 文章详情页响应式 */
+            .post-container {
+                padding: 100px 1rem 60px;
+            }
+            
+            .post-title {
+                font-size: 2rem;
+            }
+
+            .post-content {
+                font-size: 1rem;
+            }
+            
+            /* 页脚响应式 */
+            .footer-content {
+                padding: 0 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* 小屏手机适配 */
+            /* 基础字号调整 */
+            html {
+                font-size: 14px;
+            }
+            
+            /* 导航栏响应式 */
+            .nav-container {
+                padding: 1rem;
+            }
+
+            /* 容器响应式 */
+            .container {
+                padding: 0 1rem;
+            }
+            
+            /* 文章详情页响应式 */
+            .post-title {
+                font-size: 1.8rem;
+            }
+            
+            /* 页脚响应式 */
+            .social-links {
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+            
+            .social-links a {
+                flex-shrink: 0;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">theOpenExpanse</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="../index.html#about">关于</a></li>
+                <li><a href="../articles.html">文章</a></li>
+                <li><a href="../index.html#projects">项目</a></li>
+                <li><a href="../index.html#contact">联系</a></li>
+            </ul>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 文章内容区域 -->
+    <main class="post-container">
+        content_replace
+    </main>
+
+    <!-- 模态框 -->
+    <div id="wechat-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3>微信二维码</h3>
+            <img src="../images/wechat-qr.jpg" alt="微信二维码" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y4ZjVmMiIvPjxwYXRoIGQ9Ik0xMDAgMTBjLTQ5LjcgMC05MCA0MC4zLTkwIDkwczQwLjMgOTA5MCA5MCA5MC00MC4zIDkwLTkwIDkwem0wLTEwYzQ0LjIgMCA4MCAzNS44IDgwIDgwcy0zNS44IDgwLTgwIDgwLTgwLTM1LjgtODAtODAgMzUuOC04MCA4MC04MHoiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxIi8+PHBhdGggZD0iTTEyMCAxMzBjMCAxMS4xLTkuOSAyMC0yMCAyMHMtMjAtOS45LTIwLTIwIDkuOS0yMCAyMC0yMCAyMCA5LjkgMjAgMjB6IiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMSIvPjwvc3ZnPg=='">
+        </div>
+    </div>
+
+    <div id="xiaohongshu-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3>小红书二维码</h3>
+            <img src="../images/xiaohongshu-qr.jpg" alt="小红书二维码" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y4ZjVmMiIvPjxwYXRoIGQ9Ik0xMDAgMTBjLTQ5LjcgMC05MCA0MC4zLTkwIDkwczQwLjMgOTA5MCA5MCA5MC00MC4zIDkwLTkwIDkwem0wLTEwYzQ0LjIgMCA4MCAzNS44IDgwIDgwcy0zNS44IDgwLTgwIDgwLTgwLTM1LjgtODAtODAgMzUuOC04MCA4MC04MHoiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxIi8+PHBhdGggZD0iTTEyMCAxMzBjMCAxMS4xLTkuOSAyMC0yMCAyMHMtMjAtOS45LTIwLTIwIDkuOS0yMCAyMC0yMCAyMCA5LjkgMjAgMjB6IiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMSIvPjwvc3ZnPg=='">
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="social-links">
+                    <a id="wechat-link"><i class="fab fa-weixin"></i></a>
+                    <a id="xiaohongshu-link"><svg class="xhx-logo" width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <!-- 深灰色圆角背景 -->
+                        <rect x="10" y="10" width="160" height="160" rx="20" fill="#666"/>
+                        <!-- 白色小红书文字 -->
+                        <text x="90" y="105" text-anchor="middle" fill="white"
+                              font-family="PingFang SC, Microsoft YaHei, sans-serif"
+                              font-size="36" font-weight="bold">小红书</text>
+                    </svg></a>
+                    <a href="https://instagram.com/your_username" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linkedin.com/in/your_profile" target="_blank"><i class="fab fa-linkedin"></i></a>
+                </div>
+                <p class="copyright">© 2025 冷. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 导航栏汉堡菜单
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // 滚动到指定区域
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ 
+                            behavior: 'smooth' 
+                        });
+                    }
+                }
+                
+                // 关闭移动菜单
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // 模态框功能
+        const modals = {
+            'wechat-link': 'wechat-modal',
+            'xiaohongshu-link': 'xiaohongshu-modal'
+        };
+
+        // 打开模态框
+        Object.keys(modals).forEach(linkId => {
+            const link = document.getElementById(linkId);
+            const modalId = modals[linkId];
+            const modal = document.getElementById(modalId);
+            
+            link.addEventListener('click', () => {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // 防止背景滚动
+            });
+        });
+
+        // 关闭模态框
+        function closeModal(modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = ''; // 恢复背景滚动
+        }
+
+        // 点击关闭按钮关闭模态框
+        document.querySelectorAll('.modal-close').forEach(closeBtn => {
+            closeBtn.addEventListener('click', () => {
+                const modal = closeBtn.closest('.modal');
+                closeModal(modal);
+            });
+        });
+
+        // 点击模态框外部关闭模态框
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal(modal);
+                }
+            });
+        });
+
+        // 按ESC键关闭模态框
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal.active').forEach(modal => {
+                    closeModal(modal);
+                });
+            }
+        });
+
+        // 滚动时导航栏样式变化
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.boxShadow = 'var(--shadow-light)';
+            } else {
+                nav.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
